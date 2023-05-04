@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { useLocalStorage } from "@/hooks";
+import { useMemo, useRef } from "react";
+import { useChatGPTCompletions, useLocalStorage } from "@/hooks";
 import { coverLetterPropmt, resume } from "@/utils";
 import { LoadingDots } from "./loading-dots";
 import { Copy2Clipboard } from "./copy-clipboard-icon";
 
 export function CoverLetterClient() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [generatedCL, setGenerateCL] = useState<string>("");
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [generatedCL, setGenerateCL] = useState<string>("");
   const [jobDescription, setJobDescription] = useLocalStorage("jobDescription", "");
   const [promptVal, setPropmpVal] = useLocalStorage("coverLetterPropmp", coverLetterPropmt);
   const [resumeVal, setResumeVal] = useLocalStorage("resume", resume);
@@ -20,57 +20,27 @@ export function CoverLetterClient() {
     }
   };
 
-  const generateCoverLetter = async (e: any) => {
-    e.preventDefault();
-    const promptForModel = `
+  const promptForModel = useMemo(() => {
+    return `
   ${promptVal}
 
   ${jobDescription}
 
   ${resumeVal}
 `;
-    setGenerateCL("");
-    setLoading(true);
+  }, [promptVal, jobDescription, resumeVal]);
+
+  const { isLoading, completionsError, generatedCL, triggerCompletions } =
+    useChatGPTCompletions(promptForModel);
+
+  async function startStreaming() {
     try {
-      const response = await fetch("http://localhost:3000/api/gen-cover-letter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: promptForModel,
-        }),
-      });
-      console.log({ response: response.status });
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      // This data is a ReadableStream
-      const data = response.body;
-
-      if (!data) {
-        return;
-      }
-
-      const reader = data.getReader();
-      const decoder = new TextDecoder();
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        console.log({ chunkValue });
-        setGenerateCL((prev) => prev + chunkValue);
-      }
+      await triggerCompletions();
       scrollToBios();
-      setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error("Error geting ChapGPT response");
     }
-  };
-
+  }
   return (
     <>
       <label
@@ -120,15 +90,15 @@ export function CoverLetterClient() {
         placeholder="Start with default prompt..."
       ></textarea>
 
-      {!loading && (
+      {!isLoading && (
         <button
           className="bg-black rounded-md text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-          onClick={(e) => generateCoverLetter(e)}
+          onClick={startStreaming}
         >
           Generate your cover letter
         </button>
       )}
-      {loading && (
+      {isLoading && (
         <button
           className="bg-black rounded-md text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
           disabled
@@ -138,7 +108,7 @@ export function CoverLetterClient() {
       )}
 
       <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-      {generatedCL && (
+      {!completionsError && generatedCL ? (
         <div className="flex flex-col items-start w-full relative my-10 bg-white rounded-xl shadow-md p-4 hover:bg-gray-200 transition border border-gray-200">
           <Copy2Clipboard
             textToCopy={generatedCL}
@@ -146,7 +116,13 @@ export function CoverLetterClient() {
           />
           <p>{generatedCL}</p>
         </div>
-      )}
+      ) : completionsError ? (
+        <div className="flex flex-col items-start w-full relative my-10 bg-white rounded-xl shadow-md p-4 hover:bg-gray-200 transition border border-gray-200">
+          <p className="px-6 py-4 bg-slate-100 rounded-md text-center text-lg text-red-600">
+            Error Getting Response from Model
+          </p>
+        </div>
+      ) : null}
     </>
   );
 }
