@@ -1,13 +1,26 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Link from "next/link";
-
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Link href="/cover-letter">go to cover-letter</Link>
+      <a
+        href="/cover-letter"
+        className="flex flex-col items-center gap-2 text-purple-500 p-6 border border-blue-700 rounded-md hover:bg-slate-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-12 h-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"
+          />
+        </svg>
+        cover-letter
+      </a>
     </main>
   );
 }

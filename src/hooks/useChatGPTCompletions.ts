@@ -5,11 +5,12 @@ function useChatGPTCompletions(promptForModel: string) {
   const [completionsError, setcompletionsError] = useState<string | null>(null);
   const [generatedCL, setGenerateCL] = useState<string>("");
 
-  setGenerateCL("");
-  setIsLoading(true);
+
   async function triggerCompletions() {
+    setGenerateCL("");
+    setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/gen-cover-letter", {
+      const response = await fetch("http://localhost:3000/api/chatgpt-completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +38,6 @@ function useChatGPTCompletions(promptForModel: string) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
-        // console.log({ chunkValue });
         setGenerateCL((prev) => prev + chunkValue);
       }
       setIsLoading(false);

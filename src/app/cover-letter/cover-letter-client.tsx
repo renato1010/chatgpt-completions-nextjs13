@@ -7,8 +7,6 @@ import { LoadingDots } from "./loading-dots";
 import { Copy2Clipboard } from "./copy-clipboard-icon";
 
 export function CoverLetterClient() {
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [generatedCL, setGenerateCL] = useState<string>("");
   const [jobDescription, setJobDescription] = useLocalStorage("jobDescription", "");
   const [promptVal, setPropmpVal] = useLocalStorage("coverLetterPropmp", coverLetterPropmt);
   const [resumeVal, setResumeVal] = useLocalStorage("resume", resume);
