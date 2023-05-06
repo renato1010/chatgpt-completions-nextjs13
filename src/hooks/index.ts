@@ -1,3 +1,3 @@
 export * from "./use-localstorage";
 export * from "./use-copy-to-clipboard";
-export * from "./useChatGPTCompletions";
+export * from "./use-chatgpt-completions";

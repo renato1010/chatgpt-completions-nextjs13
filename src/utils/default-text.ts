@@ -1,4 +1,6 @@
-export const coverLetterPropmt = `write a cover letter, with metrics, for the following job description, use the resume I provide for reference and keep it the result under 400 words`;
+export const coverLetterPropmt = `write a cover letter that matches the following <jobdescription> with the <resume> provided for reference.
+Use a friendly and approachable tone.
+Keep it the result under 250 words`;
 export const resume = `
 RENATO PEREZ
 Full Stack Developer

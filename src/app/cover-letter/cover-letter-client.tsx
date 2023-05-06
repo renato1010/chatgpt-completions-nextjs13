@@ -22,9 +22,13 @@ export function CoverLetterClient() {
     return `
   ${promptVal}
 
+  <jobdescription>
   ${jobDescription}
+  </jobdescription>
 
+  <resume>
   ${resumeVal}
+  </resume>
 `;
   }, [promptVal, jobDescription, resumeVal]);
 
@@ -39,6 +43,7 @@ export function CoverLetterClient() {
       console.error("Error geting ChapGPT response");
     }
   }
+  console.log({ resume: resumeVal.length, jobDescription: jobDescription.length, prompt: promptVal.length });
   return (
     <>
       <label
@@ -92,7 +97,6 @@ export function CoverLetterClient() {
         <button
           className="bg-black rounded-md text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full disabled:cursor-not-allowed"
           onClick={startStreaming}
-          disabled={!jobDescription || !resumeVal || !promptVal}
         >
           Generate your cover letter
         </button>
@@ -100,7 +104,6 @@ export function CoverLetterClient() {
       {isLoading && (
         <button
           className="bg-black rounded-md text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-          disabled
         >
           <LoadingDots />
         </button>

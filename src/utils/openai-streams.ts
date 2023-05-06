@@ -66,6 +66,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       // this ensures we properly read chunks and invoke an event for each SSE event stream
       const parser = createParser(onParse);
       // https://web.dev/streams/#asynchronous-iteration
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
       for await (const chunk of res.body as any) {
         // console.log({ piece: decoder.decode(chunk) });
         parser.feed(decoder.decode(chunk));

@@ -14,23 +14,32 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ChatGPT completions endpoint
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+### Generate a cover letter from job description and resume
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The goal is reach [OpenAI chat completion endpoint](https://platform.openai.com/docs/api-reference/chat/create) to generate a cover letter  
+based on a job description(random, copy/paste) and a text-only version of a resume
 
-## Learn More
+For that it's required an API key and will be saved as `env var` at `.env.local` file at root
 
-To learn more about Next.js, take a look at the following resources:
+We're using Next.js App Router, so the starting point '/' segment only shows some icons to current  
+and future utilities.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Cover letter**: at [cover-letter](src/app/cover-letter/page.tsx) segment we have;
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. A server component that only sets metadata(title)
+2. Render a [client component](src/app/cover-letter/cover-letter-client.tsx) that takes text for  
+   fields resume,jobdescription,prompt; have as utility a defaults for resume and prompt.  
+   [custom hooks](src/hooks/use-localstorage.ts) for keeping those text inputs at localstorage
+3. When clicks the _Generate your cover letter_ button, the triggerCompletions function is invocated  
+4. and the async function triggerCompletions from custom hook **useChatGPTCompletions** is invoked
+5. Route handler at `src/app/api/chatgpt-completions/route.ts` is called and passed the prompt text as POST body  
+6. This route handler is configured as Edge Function () see: [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge) it's great because  
+   it starts with almost zero cold start and is capable to response with **streams**  
+   at the client the "streams chunks" are added to component state and it visualy looks like chatgpt text response.  
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div align="center">
+  <h3>Cover Letter Page diagram</h3>
+  <img src="https://losormorpino-public-media.s3.us-east-2.amazonaws.com/le00p9p.png" width="800" alt="use another key">
+</div>
