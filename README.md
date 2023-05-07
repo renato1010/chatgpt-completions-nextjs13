@@ -23,6 +23,13 @@ based on a job description(random, copy/paste) and a text-only version of a resu
 
 For that it's required an API key and will be saved as `env var` at `.env.local` file at root
 
+at `env.local`:
+
+```.text
+OPENAI_API_KEY=api-key-from-openai
+OPENAI_ORGANIZATION_ID=openai-org-id
+```
+
 We're using Next.js App Router, so the starting point '/' segment only shows some icons to current  
 and future utilities.
 
