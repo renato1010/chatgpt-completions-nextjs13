@@ -54,4 +54,4 @@ and future utilities.
 <br>
    
 <h3>Screencast</h3>
-![cover letter screencast](https://losormorpino-public-media.s3.us-east-2.amazonaws.com/mm00gw4.mov)
+[screencast](https://losormorpino-public-media.s3.us-east-2.amazonaws.com/es00qr7.mp4)
