@@ -52,9 +52,6 @@ and future utilities.
 </div>
 <br>
 <br>
-<div align="center">
-   <h3>Screen cast</h3>
-   <video controls width="800">
-      <source src="https://losormorpino-public-media.s3.us-east-2.amazonaws.com/es00qr7.mp4" type="video/mp4">
-   </video>
-</div>
+   
+<h3>Screencast</h3>
+![cover letter screencast](https://losormorpino-public-media.s3.us-east-2.amazonaws.com/mm00gw4.mov)
