@@ -46,6 +46,7 @@ and future utilities.
    it starts with almost zero cold start and is capable to response with **streams**  
    at the client the "streams chunks" are added to component state and it visualy looks like chatgpt text response.
 
+
 <div align="center">
    <h3>Cover Letter Page diagram</h3>
    <img src="https://losormorpino-public-media.s3.us-east-2.amazonaws.com/le00p9p.png" width="800" alt="use another key">
@@ -53,5 +54,5 @@ and future utilities.
 <br>
 <br>
    
-<h3>Screencast</h3>
-[screencast](https://losormorpino-public-media.s3.us-east-2.amazonaws.com/es00qr7.mp4)
+## Screencast
+video: [screencast](https://losormorpino-public-media.s3.us-east-2.amazonaws.com/es00qr7.mp4)
