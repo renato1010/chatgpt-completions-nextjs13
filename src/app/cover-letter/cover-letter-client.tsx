@@ -114,7 +114,7 @@ export function CoverLetterClient() {
         <div className="flex flex-col items-start w-full relative my-10 bg-white rounded-xl shadow-md p-4 hover:bg-gray-200 transition border border-gray-200">
           <Copy2Clipboard
             textToCopy={generatedCL}
-            customClasses="self-end mb-4 hover:bg-sky-100 rounded-md active:scale-110 hover:text-emerald-300 text-sky-400"
+            customClasses="self-end mb-4 transform-gpu hover:bg-sky-100 rounded-md active:scale-125 hover:text-emerald-300 text-sky-400"
           />
           <p>{generatedCL}</p>
         </div>
