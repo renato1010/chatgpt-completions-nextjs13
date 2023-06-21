@@ -1,4 +1,5 @@
-import { OpenAIStream, OpenAIStreamPayload } from "@/utils";
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { openai, CreateChatCompletionRequest } from "@/config";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OpenAI key");
@@ -12,7 +13,7 @@ export async function POST(req: Request): Promise<Response> {
     return new Response("Prompt to model is required", { status: 400 });
   }
 
-  const payload: OpenAIStreamPayload = {
+  const payload: CreateChatCompletionRequest = {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
@@ -24,6 +25,12 @@ export async function POST(req: Request): Promise<Response> {
     n: 1,
   };
 
-  const stream = await OpenAIStream(payload);
-  return new Response(stream);
+  // Ask OpenAI for a streaming chat completion given the prompt
+  const response = await openai.createChatCompletion(payload);
+
+  // convert response into a friendly text-stream
+  const stream = OpenAIStream(response);
+
+  // response with the stream
+  return new StreamingTextResponse(stream);
 }
