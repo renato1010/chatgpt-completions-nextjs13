@@ -48,7 +48,7 @@ export function CoverLetterClient() {
     <>
       <label
         htmlFor="resume"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white self-start"
+        className="block mb-2 text-lg font-medium text-gray-900 self-start"
       >
         Your resume
       </label>
@@ -65,7 +65,7 @@ export function CoverLetterClient() {
 
       <label
         htmlFor="jobDescription"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white self-start"
+        className="block mb-2 text-lg font-medium text-gray-900 self-start"
       >
         Job description
       </label>
@@ -80,7 +80,7 @@ export function CoverLetterClient() {
 
       <label
         htmlFor="prompt"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white self-start"
+        className="block mb-2 text-lg font-medium text-gray-900 self-start"
       >
         Prompt
       </label>
